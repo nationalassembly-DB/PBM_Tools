@@ -14,6 +14,7 @@ def convert_to_html(bookmarks):
     for item in bookmarks:
         level, title, page, _ = item
         blank = "\t"*(level-1)
+        title = str(title).replace("\r\n", "")
         html_content += f'{blank}<Level ID="{level}", Page="{page}">{title}</Level>\n'
     html_content += '</HTML>'
     return html_content
