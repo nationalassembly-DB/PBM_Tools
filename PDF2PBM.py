@@ -14,8 +14,9 @@ def convert_to_html(bookmarks):
     for item in bookmarks:
         level, title, page, _ = item
         blank = "\t"*(level-1)
-        title = str(title).replace("\r\n", "")
-        html_content += f'{blank}<Level ID="{level}", Page="{page}">{title}</Level>\n'
+        str_title = str(title).replace("\n", "").replace("\r", "")
+        html_content += f'{blank}<Level ID="{
+            level}", Page="{page}">{str_title}</Level>\n'
     html_content += '</HTML>'
     return html_content
 
@@ -41,7 +42,7 @@ def process_files(src_dir, dst_dir):
                         extract_bookmarks(file_path)), pdf_file_path)
                 else:
                     continue
-    except:
+    except Exception:
         log_missing_file(file, dst_dir)
 
 
