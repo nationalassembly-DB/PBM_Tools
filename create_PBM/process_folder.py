@@ -20,8 +20,7 @@ def convert_to_html(bookmarks):
         level, title, page, _ = item
         blank = "\t"*(level-1)
         str_title = str(title).replace("\n", " ").replace("\r", "")
-        html_content += f'{blank}<Level ID="{
-            level}", Page="{page}">{str_title}</Level>\n'
+        html_content += f'{blank}<Level ID="{level}", Page="{page}">{str_title}</Level>\n'
     html_content += '</HTML>'
     return html_content
 
