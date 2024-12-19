@@ -37,6 +37,7 @@ def main():
         input_path = input("\nPBM파일이 위치한 폴더 경로를 입력해주세요\n-> ")
         output_path = input("\n새로운 PBM을 저장할 폴더 경로를 입력하세요\n-> ")
         modify_file(input_path, output_path)
+        print("\nPBM파일 수정이 완료되었습니다\n")
     elif select == '0':
         sys.exit()
     else:
