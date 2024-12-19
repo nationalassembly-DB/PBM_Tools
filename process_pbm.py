@@ -6,6 +6,7 @@ import sys
 
 from check_PBM.process_folder import process_folder
 from create_PBM.process_folder import process_files
+from modify_PBM.process_folder import modify_file
 
 
 def main():
@@ -14,7 +15,7 @@ def main():
     print("\n>>>>>>PBM 생성 및 검토기<<<<<<\n")
     print("="*60)
 
-    select = input("\n[1]PBM생성\n[2]PBM검토\n[0]종료\n-> ")
+    select = input("\n[1]PBM생성\n[2]PBM검토\n[3]PBM수정\n[0]종료\n-> ")
 
     if select == '1':
         input_path = input("\npdf 파일이 존재하는 폴더를 입력하세요\n-> ").strip()
@@ -32,6 +33,10 @@ def main():
         output_path = input("\n엑셀 파일 경로를 입력하세요\n-> ")
 
         process_folder(input_path, output_path)
+    elif select == '3':
+        input_path = input("\nPBM파일이 위치한 폴더 경로를 입력해주세요\n-> ")
+        output_path = input("\n새로운 PBM을 저장할 폴더 경로를 입력하세요\n-> ")
+        modify_file(input_path, output_path)
     elif select == '0':
         sys.exit()
     else:
