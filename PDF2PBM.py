@@ -1,68 +1,38 @@
+"""main"""
+
+
 import os
-import fitz
 
-
-def extract_bookmarks(pdf_path):
-    doc = fitz.open(pdf_path)
-    toc = doc.get_toc(simple=False)
-    return toc
-
-
-def convert_to_html(bookmarks):
-    html_content = '<HTML><HEAD>\n<META NAME="PBM Ver 1.0", CONTENT="Bookmark exported by muhayu">\n</HEAD>\n'
-
-    for item in bookmarks:
-        level, title, page, _ = item
-        blank = "\t"*(level-1)
-        str_title = str(title).replace("\n", "").replace("\r", "")
-        html_content += f'{blank}<Level ID="{
-            level}", Page="{page}">{str_title}</Level>\n'
-    html_content += '</HTML>'
-    return html_content
-
-
-def save_pbm(html_content, output_path):
-    with open(output_path, 'w', encoding='utf-8') as file:
-        file.write(html_content)
-
-
-def process_files(src_dir, dst_dir):
-    try:
-        for root, _, files in os.walk(src_dir):
-            for file in files:
-                file_path = os.path.join(root, file)
-                relative_path = os.path.relpath(file_path, src_dir)
-                new_file_path = os.path.join(dst_dir, relative_path)
-
-                os.makedirs(os.path.dirname(new_file_path), exist_ok=True)
-
-                if file.lower().endswith('.pdf'):
-                    pdf_file_path = new_file_path.rsplit('.', 1)[0] + '.PBM'
-                    save_pbm(convert_to_html(
-                        extract_bookmarks(file_path)), pdf_file_path)
-                else:
-                    continue
-    except Exception:
-        log_missing_file(file, dst_dir)
-
-
-def log_missing_file(file_name, output_path):
-    log_file_path = os.path.join(output_path, 'log.txt')
-    with open(log_file_path, 'a', encoding='utf-8') as log_file:
-        log_file.write('[PBM 변환 실패] ' + file_name + '\n')
+from check_PBM.process_folder import process_folder
+from create_PBM.process_folder import process_files
 
 
 def main():
-    pdf_path = input("pdf 파일이 존재하는 폴더를 입력하세요 : ").strip()
-    output_path = input("저장할 파일 폴더를 입력하세요 : ").strip()
+    """main"""
+    print("="*60)
+    print("\n>>>>>>PBM 생성 및 검토기<<<<<<\n")
+    print("="*60)
 
-    if not os.path.isdir(pdf_path):
-        print("입력 폴더의 경로를 다시 한번 확인해주세요")
-        return
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
-    process_files(pdf_path, output_path)
-    print("모든 작업이 정상적으로 완료되었습니다.")
+    select = input("\n[1]PBM생성\n[2]PBM검토\n-> ")
+
+    if select == '1':
+        input_path = input("\npdf 파일이 존재하는 폴더를 입력하세요\n-> ").strip()
+        output_path = input("\n저장할 파일 폴더를 입력하세요\n-> ").strip()
+
+        if not os.path.isdir(input_path):
+            print("입력 폴더의 경로를 다시 한번 확인해주세요")
+            return main()
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+        process_files(input_path, output_path)
+        print("모든 작업이 정상적으로 완료되었습니다.")
+    elif select == '2':
+        input_path = input("\nPBM파일이 위치한 폴더 경로를 입력해주세요\n-> ")
+        output_path = input("\n엑셀 파일 경로를 입력하세요\n-> ")
+
+        process_folder(input_path, output_path)
+
+    return main()
 
 
 if __name__ == "__main__":
