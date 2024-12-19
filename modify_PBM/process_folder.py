@@ -20,7 +20,7 @@ def modify_file(input_path, output_path):
                 html = pbm.read()
 
                 cleaned_html = re.sub(r'(<Level[^>]*>)([^<]+)(</Level>)', lambda m: m.group(
-                    1) + m.group(2).replace('\r', '').replace('\n', ' ').strip() + m.group(3), html)
+                    1) + m.group(2).replace('\r', '').replace('\n', '').strip() + m.group(3), html)
 
             with open(output_file, 'w', encoding='utf-8') as savepbm:
                 savepbm.write(cleaned_html)
