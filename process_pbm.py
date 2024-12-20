@@ -27,7 +27,7 @@ def main():
         if not os.path.exists(output_path):
             os.makedirs(output_path)
         process_files(input_path, output_path)
-        print("모든 작업이 정상적으로 완료되었습니다.")
+        print("\n모든 작업이 정상적으로 완료되었습니다.")
     elif select == '2':
         input_path = input("\nPBM파일이 위치한 폴더 경로를 입력해주세요\n-> ")
         output_path = input("\n엑셀 파일 경로를 입력하세요\n-> ")
