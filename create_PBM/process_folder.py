@@ -3,6 +3,8 @@
 
 import os
 import fitz
+from natsort import natsorted
+from tqdm import tqdm
 
 
 def extract_bookmarks(pdf_path):
@@ -35,7 +37,7 @@ def process_files(src_dir, dst_dir):
     """PBM 저장을 위한 폴더 순회"""
     try:
         for root, _, files in os.walk(src_dir):
-            for file in files:
+            for file in tqdm(natsorted(files)):
                 file_path = os.path.join(root, file)
                 relative_path = os.path.relpath(file_path, src_dir)
                 new_file_path = os.path.join(dst_dir, relative_path)

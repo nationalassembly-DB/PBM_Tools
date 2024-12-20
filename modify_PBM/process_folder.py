@@ -4,12 +4,13 @@
 import os
 import re
 from natsort import natsorted
+from tqdm import tqdm
 
 
 def modify_file(input_path, output_path):
     """개행문자 제거후 새로 저장"""
     for root, _, files in os.walk(input_path):
-        for file in natsorted(files):
+        for file in tqdm(natsorted(files)):
             if not file.lower().endswith('.pbm'):
                 continue
 

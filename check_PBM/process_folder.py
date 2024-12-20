@@ -8,6 +8,7 @@ from natsort import natsorted
 from bs4 import BeautifulSoup
 from openpyxl import Workbook, load_workbook
 from openpyxl.styles import PatternFill
+from tqdm import tqdm
 
 
 def process_folder(input_path, output_path):
@@ -15,7 +16,7 @@ def process_folder(input_path, output_path):
     error_pbm = []
 
     for root, _, files in os.walk(input_path):
-        for file in natsorted(files):
+        for file in tqdm(natsorted(files)):
             if not str(file).lower().endswith('.pbm'):
                 continue
             pbm_path = os.path.join(root, file)
